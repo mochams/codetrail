@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/project/psqache
+      url: https://pypi.org/project/codetrail
     permissions:
       id-token: write
 
