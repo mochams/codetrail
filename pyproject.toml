@@ -6,6 +6,9 @@ authors = ["Mochama <mochama254@protonmail.com>"]
 readme = "README.md"
 homepage = "https://github.com/mochams/codetrail"
 
+[tool.poetry.scripts]
+codetrail = "codetrail.__main__:main"
+
 [tool.poetry.dependencies]
 python = "^3.12"
 
@@ -55,7 +58,6 @@ exclude = [
     "node_modules",
     "site-packages",
     "venv",
-    "tests",
     "*/migrations/*.py",
     "staticfiles/*",
 ]
