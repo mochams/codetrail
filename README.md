@@ -6,8 +6,6 @@
 
 Welcome to the learning experience! First things first: `Codetrail` is not trying to be the next `Git`. Heck, we're actually using `Git` as our version control system. We're just crazy enough to build our own distributed version control system from scratch because... why not?
 
-Codetrail isn’t just code; it’s an attitude. It’s the “why not” to Git’s “why.” Think of `codetrail` as that friend who decided to build their own car while everyone else is buying them. Sure, it might not be as polished as a Tesla, but boy, will we learn how the engine works!
-
 ## 💡 The Mission
 
 We're here to prove that with:
