@@ -1,5 +1,8 @@
 # 🌲 Codetrail: Where Code Goes Hiking
 
+![PyPI](https://img.shields.io/pypi/v/codetrail)
+![Python](https://img.shields.io/pypi/pyversions/codetrail)
+![License](https://img.shields.io/github/license/mochams/codetrail)
 [![Built with Sheer Determination](https://img.shields.io/badge/Built%20with-Sheer%20Determination-brightgreen.svg)](https://github.com/mochams/codetrail)
 
 ## 🤔 What's This All About?
