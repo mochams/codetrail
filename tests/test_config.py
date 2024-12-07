@@ -2,17 +2,17 @@
 
 import logging
 
-from codetrail.logconfig import logger
+from codetrail.config import LOGGER
 
 
 def test_logger_name_is_codetrail():
     """Test that the logger has the correct name."""
-    assert logger.name == "codetrail"
+    assert LOGGER.name == "codetrail"
 
 
 def test_log_level_is_info():
     """Test that the log level is set correctly from the environment."""
-    assert logger.level == logging.INFO
+    assert LOGGER.level == logging.INFO
 
 
 def test_log_output(caplog):
@@ -20,7 +20,7 @@ def test_log_output(caplog):
     test_message = "Test log message"
 
     with caplog.at_level(logging.INFO):
-        logger.info(test_message)
+        LOGGER.info(test_message)
 
     assert test_message in caplog.text
     assert "INFO" in caplog.text
