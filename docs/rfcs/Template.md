@@ -101,17 +101,6 @@ command [arguments] <options>
 - Cons
 - Why rejected
 
-## Implementation Plan
-
-[Break down the implementation into smaller, manageable steps.]
-
-1. Step 1
-   - Sub-tasks
-   - Timeline estimate
-2. Step 2
-   - Sub-tasks
-   - Timeline estimate
-
 ## Migration Plan
 
 [If applicable, how will existing users/data be migrated to the new system?]
@@ -151,8 +140,7 @@ command [arguments] <options>
 6. **Proposal**: Contains the main technical content
 7. **Examples**: Shows practical usage
 8. **Alternatives**: Demonstrates thorough analysis
-9. **Implementation Plan**: Provides roadmap for execution
-10. **Success Criteria**: Defines completion metrics
-11. **Future Considerations**: Anticipates future needs
-12. **Questions**: Acknowledges uncertainties
-13. **References**: Provides additional context
+9. **Success Criteria**: Defines completion metrics
+10. **Future Considerations**: Anticipates future needs
+11. **Questions**: Acknowledges uncertainties
+12. **References**: Provides additional context
