@@ -8,7 +8,7 @@ from unittest.mock import patch
 import pytest
 
 from codetrail.config import DEFAULT_CODETRAIL_DIRECTORY
-from codetrail.repository import CodetrailRepository
+from codetrail.domain import models
 
 
 @pytest.fixture
@@ -66,11 +66,11 @@ def argument_namespace():
 
 
 @pytest.fixture
-def repository(temporary_dir):
+def code_repository(temporary_dir):
     """Provides valid repository."""
     repo_dir = temporary_dir / DEFAULT_CODETRAIL_DIRECTORY
     repo_dir.mkdir()
-    return CodetrailRepository(temporary_dir)
+    return models.CodeRepository(temporary_dir)
 
 
 @pytest.fixture

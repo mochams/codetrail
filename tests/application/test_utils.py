@@ -5,8 +5,7 @@ from unittest.mock import patch
 
 import pytest
 
-from codetrail import exceptions
-from codetrail import utils
+from codetrail.application import utils
 from codetrail.config import DEFAULT_CODETRAIL_DIRECTORY
 from tests.utils import assert_file_has_content
 
