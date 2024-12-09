@@ -47,7 +47,7 @@ def make_directory(path: Path) -> None:
     Path.mkdir(path, parents=True, exist_ok=True)
 
 
-def find_repository_path(path: str) -> Path | None:
+def find_repository_path(path: str | Path) -> Path | None:
     """Find the root of the Codetrail repository.
 
     Starts at the given directory and moves upwards until it finds the repository
@@ -70,7 +70,7 @@ def find_repository_path(path: str) -> Path | None:
     return None
 
 
-def find_child_repository_path(path: str) -> Path | None:
+def find_child_repository_path(path: str | Path) -> Path | None:
     """Find out if any child directory contains a Codetrail repository.
 
     Args:

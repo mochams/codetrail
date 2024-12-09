@@ -11,3 +11,7 @@ LOGGER: Final = logging.getLogger("codetrail")
 LOGGER.setLevel(level=logging.INFO)
 
 DEFAULT_CODETRAIL_DIRECTORY = ".codetrail"
+DEFAULT_REPOSITORY_DESCRIPTION = (
+    "Unnamed repository; edit this file 'description' to name the repository."
+)
+DEFAULT_REPOSITORY_HEAD = "ref: refs/heads/master"

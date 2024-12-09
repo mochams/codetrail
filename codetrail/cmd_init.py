@@ -8,6 +8,9 @@ import argparse
 
 from codetrail import exceptions
 from codetrail import utils
+from codetrail.commands import InitializeRepository
+from codetrail.config import DEFAULT_REPOSITORY_DESCRIPTION
+from codetrail.config import DEFAULT_REPOSITORY_HEAD
 from codetrail.config import LOGGER
 from codetrail.repository import CodetrailRepository
 
@@ -20,33 +23,33 @@ def run(arguments: argparse.Namespace) -> None:
     """
     LOGGER.info("Initializing a new repository.")
     try:
-        initialize_repository(arguments.path)
+        initialize_repository(command=InitializeRepository(path=arguments.path))
     except (exceptions.ExistingRepositoryError, NotADirectoryError) as e:
         LOGGER.error(str(e))
 
 
-def initialize_repository(path: str) -> None:
+def initialize_repository(command: InitializeRepository) -> None:
     """Initialize a new, empty repository.
 
     Args:
-        path: The path where the repository should be created.
+        command: The command responsible for initializing a repository.
 
     Raises:
         NotADirectoryError: If the specified path is not a directory.
         ExistingRepositoryError: If the path parents/children has a repository.
     """
-    parent_repository = utils.find_repository_path(path)
+    parent_repository = utils.find_repository_path(command.path)
     if parent_repository:
         msg = f"Found an existing repository at {parent_repository}. Exiting!"
         raise exceptions.ExistingRepositoryError(msg)
 
-    repository = CodetrailRepository(path, strict=False)
+    repository = CodetrailRepository(path=command.path, strict=False)
     if utils.path_exists(repository.worktree):
         if not utils.path_is_directory(repository.worktree):
             msg = ""
             raise NotADirectoryError(msg)
 
-        child_repository = utils.find_child_repository_path(path)
+        child_repository = utils.find_child_repository_path(command.path)
         if child_repository:
             msg = f"Found an existing repository at {child_repository}. Exiting!"
             raise exceptions.ExistingRepositoryError(msg)
@@ -91,9 +94,6 @@ def write_to_initial_files(repository: CodetrailRepository) -> None:
     """
     utils.write_to_file(
         repository.repository_path("description"),
-        "Unnamed repository; edit this file 'description' to name the repository.",
+        DEFAULT_REPOSITORY_DESCRIPTION,
     )
-    utils.write_to_file(
-        repository.repository_path("HEAD"),
-        "ref: refs/heads/master",
-    )
+    utils.write_to_file(repository.repository_path("HEAD"), DEFAULT_REPOSITORY_HEAD)
