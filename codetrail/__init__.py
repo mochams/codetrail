@@ -1,1 +1,1 @@
-"""VCS inpired by Git."""
+"""VCS inspired by Git."""

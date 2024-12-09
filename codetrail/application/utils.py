@@ -1,4 +1,4 @@
-"""This module holds shared functions used by commands."""
+"""This module holds shared functions used in application logic."""
 
 from pathlib import Path
 

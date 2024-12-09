@@ -10,4 +10,4 @@ class ExistingRepositoryError(Exception):
 
 
 class InvalidCommandError(Exception):
-    """Exception raised when a wrong/incoreect command is issued."""
+    """Exception raised when a wrong/incorrect command is issued."""

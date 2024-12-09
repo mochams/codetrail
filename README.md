@@ -93,13 +93,13 @@ cd codetrail
 poetry install
 
 # Run to see supported commands
-python -m codetrail --help
+codetrail --help
 
 # Run to see usage of a particular command e.g init
-python -m codetrail init --help
+codetrail init --help
 
 # Run your command. e.g init
-python -m codetrail init
+codetrail init
 ```
 
 ## 🤝 Contributing
