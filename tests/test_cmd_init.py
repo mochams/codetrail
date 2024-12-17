@@ -1,10 +1,10 @@
 import pytest
 
+from codetrail import commands
 from codetrail import exceptions
-from codetrail.application import commands
-from codetrail.application import initialize_repository
-from codetrail.application import utils
-from codetrail.config import DEFAULT_CODETRAIL_DIRECTORY
+from codetrail import utils
+from codetrail.cmd_init import initialize_repository
+from codetrail.conf import DEFAULT_CODETRAIL_DIRECTORY
 
 
 def initialize_repository_command(path):
@@ -12,7 +12,7 @@ def initialize_repository_command(path):
 
 
 class TestInitializeRepository:
-    """Tests for `run` function."""
+    """Tests for `initialize_repository` function."""
 
     def test_creates_initial_files(self, temporary_dir):
         """Test initializes repository."""

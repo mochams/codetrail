@@ -1,14 +1,15 @@
 """This module contains global fixtures for the tests."""
 
 import argparse
-import logging
+import configparser
 from pathlib import Path
 from unittest.mock import patch
 
 import pytest
 
-from codetrail.config import DEFAULT_CODETRAIL_DIRECTORY
-from codetrail.domain import models
+from codetrail import cmd_init
+from codetrail import commands
+from codetrail import models
 
 
 @pytest.fixture
@@ -16,7 +17,7 @@ def temporary_dir(tmp_path):
     """Provide a temporary directory.
 
     Returns:
-        The temporay directory.
+        The temporary directory.
     """
     directory = tmp_path / "sub"
     directory.mkdir()
@@ -28,7 +29,7 @@ def temporary_file(temporary_dir):
     """Provide a temporary file.
 
     Returns:
-        The temporay directory.
+        The temporary directory.
     """
     file = temporary_dir / "hello.txt"
     file.write_text("content", encoding="utf-8")
@@ -36,7 +37,7 @@ def temporary_file(temporary_dir):
 
 
 @pytest.fixture
-def noneexistent_dir():
+def nonexistent_dir():
     """Provide a nonexistent directory.
 
     Returns:
@@ -46,7 +47,7 @@ def noneexistent_dir():
 
 
 @pytest.fixture
-def noneexistent_file():
+def nonexistent_file():
     """Provide a nonexistent file.
 
     Returns:
@@ -66,22 +67,20 @@ def argument_namespace():
 
 
 @pytest.fixture
+def default_path(temporary_dir):
+    """Provides default path."""
+    with patch.object(commands.BaseCommand, "default_path", temporary_dir):
+        yield
+
+
+@pytest.fixture
 def code_repository(temporary_dir):
     """Provides valid repository."""
-    repo_dir = temporary_dir / DEFAULT_CODETRAIL_DIRECTORY
-    repo_dir.mkdir()
-    return models.CodeRepository(temporary_dir)
+    cmd_init.initialize_repository(commands.InitializeRepository(path=temporary_dir))
+    return models.CodetrailRepository(temporary_dir)
 
 
 @pytest.fixture
-def caplog_info(caplog):
-    """Provides caplog at level INFO"""
-    with caplog.at_level(logging.INFO) as cap_info:
-        yield cap_info
-
-
-@pytest.fixture
-def codetrail_logger():
-    """Provides caplog at level ERROR"""
-    with patch("codetrail.config.LOGGER") as logger:
-        yield logger
+def config_parser():
+    """Provides config parser."""
+    return configparser.ConfigParser()

@@ -15,3 +15,12 @@ DEFAULT_REPOSITORY_DESCRIPTION = (
     "Unnamed repository; edit this file 'description' to name the repository."
 )
 DEFAULT_REPOSITORY_HEAD = "ref: refs/heads/master"
+
+CONFIG_FILE = "config"
+HEAD_FILE = "HEAD"
+DESCRIPTION_FILE = "description"
+
+DEFAULT_CURRENT_PATH = "."
+
+CONFIG_SECTIONS = ["user", "core"]
+CONFIG_USER_OPTIONS = ["name", "email"]

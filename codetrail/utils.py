@@ -1,8 +1,9 @@
-"""This module holds shared functions used in application logic."""
+"""This module defines the file system operations."""
 
+from configparser import ConfigParser
 from pathlib import Path
 
-from codetrail.config import DEFAULT_CODETRAIL_DIRECTORY
+from codetrail.conf import DEFAULT_CODETRAIL_DIRECTORY
 
 
 def path_is_directory(path: Path) -> bool:
@@ -94,3 +95,14 @@ def write_to_file(file_path: Path, content: str) -> None:
     """
     with Path.open(file_path, "w", encoding="utf-8") as file:
         file.write(f"{content}\n")
+
+
+def write_to_config_file(file_path: Path, config: ConfigParser) -> None:
+    """Write content to a configuration file, creating or overwriting it.
+
+    Args:
+        file_path: The path to the file where content will be written.
+        config: The configuration parser instance.
+    """
+    with Path.open(file_path, "w", encoding="utf-8") as file:
+        config.write(file)

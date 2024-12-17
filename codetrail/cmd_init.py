@@ -4,18 +4,23 @@ Usage:
     codetrail init <path>
 """
 
+from configparser import ConfigParser
 from pathlib import Path
 
+from codetrail import commands
 from codetrail import exceptions
-from codetrail.application import utils
-from codetrail.application.commands import InitializeRepository
-from codetrail.config import DEFAULT_REPOSITORY_DESCRIPTION
-from codetrail.config import DEFAULT_REPOSITORY_HEAD
-from codetrail.config import LOGGER
-from codetrail.domain import models
+from codetrail import models
+from codetrail import utils
+from codetrail.conf import CONFIG_FILE
+from codetrail.conf import CONFIG_SECTIONS
+from codetrail.conf import DEFAULT_REPOSITORY_DESCRIPTION
+from codetrail.conf import DEFAULT_REPOSITORY_HEAD
+from codetrail.conf import DESCRIPTION_FILE
+from codetrail.conf import HEAD_FILE
+from codetrail.conf import LOGGER
 
 
-def initialize_repository(command: InitializeRepository) -> None:
+def initialize_repository(command: commands.InitializeRepository) -> None:
     """Initialize a new, empty repository.
 
     Args:
@@ -30,7 +35,7 @@ def initialize_repository(command: InitializeRepository) -> None:
         msg = f"Found an existing repository at {parent_repository}. Exiting!"
         raise exceptions.ExistingRepositoryError(msg)
 
-    repository = models.CodeRepository(path=command.path, strict=False)
+    repository = models.CodetrailRepository(path=command.path, strict=False)
     if utils.path_exists(repository.work_tree):
         if not utils.path_is_directory(repository.work_tree):
             msg = ""
@@ -40,12 +45,11 @@ def initialize_repository(command: InitializeRepository) -> None:
         if child_repository:
             msg = f"Found an existing repository at {child_repository}. Exiting!"
             raise exceptions.ExistingRepositoryError(msg)
-    else:
-        utils.make_directory(repository.work_tree)
 
     make_initial_directories(repository.repo_dir)
     make_initial_files(repository.repo_dir)
     write_to_initial_files(repository.repo_dir)
+    write_to_initial_config(repository.config_path, repository.config)
 
     LOGGER.info(f"Initialized new repository at {repository.abs_work_tree}.")
     LOGGER.info(f"New codetrail directory at {repository.abs_repo_dir}.")
@@ -68,9 +72,9 @@ def make_initial_files(path: Path) -> None:
     Args:
         path: The repository path.
     """
-    utils.make_file(path / "description")
-    utils.make_file(path / "HEAD")
-    utils.make_file(path / "config")
+    utils.make_file(path / DESCRIPTION_FILE)
+    utils.make_file(path / HEAD_FILE)
+    utils.make_file(path / CONFIG_FILE)
 
 
 def write_to_initial_files(path: Path) -> None:
@@ -80,7 +84,19 @@ def write_to_initial_files(path: Path) -> None:
         path: The repository path.
     """
     utils.write_to_file(
-        path / "description",
+        path / DESCRIPTION_FILE,
         DEFAULT_REPOSITORY_DESCRIPTION,
     )
-    utils.write_to_file(path / "HEAD", DEFAULT_REPOSITORY_HEAD)
+    utils.write_to_file(path / HEAD_FILE, DEFAULT_REPOSITORY_HEAD)
+
+
+def write_to_initial_config(path: Path, config: ConfigParser) -> None:
+    """Write content to a initial files.
+
+    Args:
+        path: The repository path.
+        config: The repository configuration parser instance.
+    """
+    for section in CONFIG_SECTIONS:
+        config.add_section(section)
+    utils.write_to_config_file(path, config)

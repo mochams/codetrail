@@ -281,3 +281,6 @@ env.sh
 
 # Jetbrains
 .idea
+
+# codetrail
+.codetrail
