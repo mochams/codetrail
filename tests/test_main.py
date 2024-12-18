@@ -12,8 +12,8 @@ def test_main_logs_message(caplog):
     with (
         caplog.at_level(logging.INFO),
         patch("sys.argv", ["codetrail", "init", "/some/path"]),
-        patch("codetrail.__main__.parsers.argparser.parse_args") as mock_parser,
-        patch("codetrail.cli.utils.match_commands") as mock_match_commands,
+        patch("codetrail.__main__.parsers.arg_parser.parse_args") as mock_parser,
+        patch("codetrail.__main__.cli.run") as mock_match_commands,
     ):
         mock_args = MagicMock()
         mock_args.command = "init"

@@ -11,3 +11,11 @@ class ExistingRepositoryError(Exception):
 
 class InvalidCommandError(Exception):
     """Exception raised when a wrong/incorrect command is issued."""
+
+
+class MissingConfigurationFileError(Exception):
+    """Exception raised when a configuration file is missing."""
+
+
+class UnsupportedConfigError(Exception):
+    """Exception raise when configuration an invalid section or option."""

@@ -5,8 +5,8 @@ from unittest.mock import patch
 
 import pytest
 
-from codetrail.application import utils
-from codetrail.config import DEFAULT_CODETRAIL_DIRECTORY
+from codetrail import utils
+from codetrail.conf import DEFAULT_CODETRAIL_DIRECTORY
 from tests.utils import assert_file_has_content
 
 
@@ -15,7 +15,7 @@ from tests.utils import assert_file_has_content
     [
         ("temporary_dir", True),  # Temporary directory
         ("temporary_file", False),  # Temporary file
-        ("noneexistent_dir", False),  # Non-existent path
+        ("nonexistent_dir", False),  # Non-existent path
     ],
 )
 def test_path_is_directory(path, expected, request):
@@ -29,7 +29,7 @@ def test_path_is_directory(path, expected, request):
     [
         ("temporary_dir", True),  # Temporary directory
         ("temporary_file", True),  # Temporary file
-        ("noneexistent_dir", False),  # Non-existent directory
+        ("nonexistent_dir", False),  # Non-existent directory
     ],
 )
 def test_path_exists(path, expected, request):

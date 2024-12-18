@@ -79,7 +79,7 @@ Unlike other VCS projects that try to compete with Git, we're here to:
 ### Prerequisites
 
 - Python 3.8 or higher
-- pip (Python package installer)
+- poetry (Python package manager)
 
 ### Basic Usage
 
@@ -114,7 +114,7 @@ Found a bug? That's probably a feature! But if you insist, here's how you can he
 
 ### Development Process
 
-1. Fork the repo
+1. Clone the repo
 2. Create your feature branch
 3. Write tests (yes, we're that serious)
 4. Commit your changes

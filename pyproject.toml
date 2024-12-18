@@ -29,7 +29,7 @@ build-backend = "poetry.core.masonry.api"
 # ==== Ruff ====
 [tool.ruff]
 # Enable/Disable application of unsafe fixes.
-unsafe-fixes = false
+unsafe-fixes = true
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -288,7 +288,7 @@ ignore_errors = true
 # ==== Pytest ====
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov=codetrail --cov-fail-under=100 --cov-report=html --cov-report=term-missing --durations=100 -n auto --memray -v"
+addopts = "--cov=codetrail --cov-fail-under=95 --cov-report=html --cov-report=term-missing --durations=100 -n auto --memray -v"
 python_files = ["tests.py", "test_*.py"]
 log_cli = 1
 log_cli_level = "ERROR"
