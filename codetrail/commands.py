@@ -44,16 +44,14 @@ class InitializeRepository(BaseCommand):
     path: str | Path
 
 
-class SetConfig(BaseCommand):
-    """Command to set a configuration with key and value.
+class BaseConfigCommand(BaseCommand):
+    """The base class for all configuration commands.
 
     Attributes:
-        key (str): The key that will hold the value.
-        value (str): The value to set .
+        key (str): The key to be used in the configuration.
     """
 
     key: str
-    value: str
 
     @cached_property
     def section(self) -> str:
@@ -78,3 +76,22 @@ class SetConfig(BaseCommand):
             key "user.name", returns 'name'
         """
         return self.key.split(".")[1]
+
+
+class SetConfig(BaseConfigCommand):
+    """Command to set a configuration with key and value.
+
+    Attributes:
+        key (str): The key that will hold the value.
+        value (str): The value to set .
+    """
+
+    value: str
+
+
+class GetConfig(BaseConfigCommand):
+    """Command to get a configuration value with key.
+
+    Attributes:
+        key (str): The key to get the value from.
+    """
