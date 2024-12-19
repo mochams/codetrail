@@ -95,3 +95,13 @@ class GetConfig(BaseConfigCommand):
     Attributes:
         key (str): The key to get the value from.
     """
+
+
+class ListConfig(BaseConfigCommand):
+    """Command to list all configuration values.
+
+    Attributes:
+        None: This command has no specific attributes.
+    """
+
+    key: str = ""

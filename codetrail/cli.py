@@ -36,7 +36,6 @@ def init(arguments: argparse.Namespace) -> None:
     Args:
         arguments: Parsed command-line arguments containing the target path.
     """
-    LOGGER.info("Initializing a new repository.")
     try:
         command = commands.InitializeRepository(path=arguments.path)
         cmd_init.initialize_repository(command)
@@ -72,6 +71,9 @@ def run_config(arguments: argparse.Namespace) -> None:
         case "get":
             command = commands.GetConfig(key=arguments.key[0])
             cmd_config.get_config(command)
+        case "list":
+            command = commands.ListConfig()
+            cmd_config.list_config(command)
         case _:
-            msg = f"Invalid Command '{arguments.command}'. Choose from (set,)"
+            msg = f"Invalid Command '{arguments.command}'. Choose from (set,get)"
             raise exceptions.InvalidCommandError(msg)

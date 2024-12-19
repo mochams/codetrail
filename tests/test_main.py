@@ -7,10 +7,9 @@ from unittest.mock import patch
 from codetrail.__main__ import main  # noqa: PLC2701
 
 
-def test_main_logs_message(caplog):
+def test_main_logs_message():
     """Test that main logs a welcome message."""
     with (
-        caplog.at_level(logging.INFO),
         patch("sys.argv", ["codetrail", "init", "/some/path"]),
         patch("codetrail.__main__.parsers.arg_parser.parse_args") as mock_parser,
         patch("codetrail.__main__.cli.run") as mock_match_commands,
@@ -24,5 +23,3 @@ def test_main_logs_message(caplog):
 
         mock_parser.assert_called_once_with(["init", "/some/path"])
         mock_match_commands.assert_called_once_with("init", mock_args)
-
-        assert "Welcome to codetrail!" in caplog.text

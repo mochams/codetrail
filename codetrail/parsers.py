@@ -30,6 +30,7 @@ config = arg_subparsers.add_parser(
 config_subparsers = config.add_subparsers(title="Commands", dest="command")
 config_subparsers.required = True
 
+# ~ Set
 set_ = config_subparsers.add_parser("set", help="Set a config value")
 set_.add_argument(
     "key",
@@ -45,12 +46,14 @@ set_.add_argument(
     type=str,
     nargs=1,
 )
-
-get_ = config_subparsers.add_parser("get", help="Get a config value")
-get_.add_argument(
+# ~ Get
+get = config_subparsers.add_parser("get", help="Get a config value")
+get.add_argument(
     "key",
     metavar="key",
     help="The name of the key that holds the configuration value.",
     type=str,
     nargs=1,
 )
+# ~ List
+list_ = config_subparsers.add_parser("list", help="List all config values")
