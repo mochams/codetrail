@@ -4,7 +4,9 @@ from unittest.mock import patch
 
 import pytest
 
-from codetrail import cli, cmd_config, cmd_init
+from codetrail import cli
+from codetrail import cmd_config
+from codetrail import cmd_init
 from codetrail import commands
 from codetrail import exceptions
 
@@ -80,15 +82,40 @@ class TestConfig:
         with patch.object(cmd_config, "get_config") as mock_get_config:
             cli.config(arguments)
             mock_get_config.assert_called_once_with(
-                commands.GetConfig(key=arguments.key[0])
+                commands.GetConfig(key=arguments.key[0]),
             )
 
     def test_calls_list_config(self, temporary_dir):
         """Test listing of the configuration."""
         arguments = argparse.Namespace(command="list")
-        with patch.object(cmd_config, "list_config") as mock_get_config:
+        with patch.object(cmd_config, "list_config") as mock_list_config:
             cli.config(arguments)
-            mock_get_config.assert_called_once_with(commands.ListConfig())
+            mock_list_config.assert_called_once_with(commands.ListConfig())
+
+    def test_calls_unset_config(self, temporary_dir):
+        """Test removing of the configuration value."""
+        arguments = argparse.Namespace(
+            command="unset",
+            key=["user.name"],
+        )
+        with patch.object(cmd_config, "unset_config") as mock_unset_config:
+            cli.config(arguments)
+            mock_unset_config.assert_called_once_with(
+                commands.UnsetConfig(key=arguments.key[0]),
+            )
+
+    def test_calls_edit_config(self, temporary_dir):
+        """Test valid editing of the configuration."""
+        arguments = argparse.Namespace(
+            command="edit",
+            key=["user.name"],
+            value=["Chill Guy"],
+        )
+        with patch.object(cmd_config, "set_config") as mock_set_config:
+            cli.config(arguments)
+            mock_set_config.assert_called_once_with(
+                commands.SetConfig(key=arguments.key[0], value=arguments.value[0]),
+            )
 
     def test_raises_exception_on_wrong_command(self, argument_namespace):
         """Test with wrong command."""

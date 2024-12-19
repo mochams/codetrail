@@ -57,3 +57,28 @@ get.add_argument(
 )
 # ~ List
 list_ = config_subparsers.add_parser("list", help="List all config values")
+# ~ Unset
+unset = config_subparsers.add_parser("unset", help="Unset a config value")
+unset.add_argument(
+    "key",
+    metavar="key",
+    help="The name of the key that holds the configuration value.",
+    type=str,
+    nargs=1,
+)
+# ~ Edit
+edit = config_subparsers.add_parser("edit", help="Edit the config file.")
+edit.add_argument(
+    "key",
+    metavar="key",
+    help="The name of the key that will hold the configuration value.",
+    type=str,
+    nargs=1,
+)
+edit.add_argument(
+    "value",
+    metavar="value",
+    help="The new value of the configuration setting.",
+    type=str,
+    nargs=1,
+)

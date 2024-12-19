@@ -1,6 +1,5 @@
 """Tests for main entrypoint."""
 
-import logging
 from unittest.mock import MagicMock
 from unittest.mock import patch
 

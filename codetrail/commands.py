@@ -105,3 +105,11 @@ class ListConfig(BaseConfigCommand):
     """
 
     key: str = ""
+
+
+class UnsetConfig(BaseConfigCommand):
+    """Command to unset a configuration value with key.
+
+    Attributes:
+        key (str): The key to unset the value from.
+    """
