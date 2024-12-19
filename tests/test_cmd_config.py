@@ -3,7 +3,7 @@ import pytest
 
 from codetrail import commands
 from codetrail import exceptions
-from codetrail.cmd_config import get_config, set_config
+from codetrail.cmd_config import get_config, list_config, set_config
 
 
 def initialize_repository_command(path):
@@ -76,3 +76,16 @@ class TestGetConfig:
         """Test with wrong option."""
         with pytest.raises(exceptions.UnsupportedConfigError):
             get_config(commands.GetConfig(key="user.names"))
+
+
+@pytest.mark.usefixtures("default_path")
+class TestListConfig:
+    """Tests for `list_config` function."""
+
+    def test_can_get_name_for_a_user(self, code_repository, config_parser, caplog):
+        """Test gets user name from config."""
+        set_config(commands.SetConfig(key="user.name", value="Chill Guy"))
+
+        with caplog.at_level(logging.INFO):
+            list_config(commands.ListConfig(key="user.name"))
+            assert "user.name = Chill Guy" in caplog.text

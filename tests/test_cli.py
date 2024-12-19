@@ -72,7 +72,7 @@ class TestConfig:
             )
 
     def test_calls_get_config(self, temporary_dir):
-        """Test valid setting of the configuration."""
+        """Test getting of the configuration value."""
         arguments = argparse.Namespace(
             command="get",
             key=["user.name"],
@@ -82,6 +82,13 @@ class TestConfig:
             mock_get_config.assert_called_once_with(
                 commands.GetConfig(key=arguments.key[0])
             )
+
+    def test_calls_list_config(self, temporary_dir):
+        """Test listing of the configuration."""
+        arguments = argparse.Namespace(command="list")
+        with patch.object(cmd_config, "list_config") as mock_get_config:
+            cli.config(arguments)
+            mock_get_config.assert_called_once_with(commands.ListConfig())
 
     def test_raises_exception_on_wrong_command(self, argument_namespace):
         """Test with wrong command."""
