@@ -28,11 +28,11 @@ def set_config(command: commands.SetConfig) -> None:
     repository = models.CodetrailRepository(repo_path)
 
     if command.section not in CONFIG_SECTIONS:
-        msg = f"Invalid section '{command.section}', choose from '{CONFIG_SECTIONS}'"
+        msg = f"Unknown section '{command.section}', choose from '{CONFIG_SECTIONS}'"
         raise exceptions.UnsupportedConfigError(msg)
 
     if command.section in CONFIG_SECTIONS and command.option not in CONFIG_USER_OPTIONS:
-        msg = f"Invalid option '{command.option}', choose from '{CONFIG_USER_OPTIONS}'"
+        msg = f"Unknown option '{command.option}', choose from '{CONFIG_USER_OPTIONS}'"
         raise exceptions.UnsupportedConfigError(msg)
 
     repository.config.set(command.section, command.option, command.value)
@@ -55,7 +55,7 @@ def get_config(command: commands.GetConfig) -> None:
     try:
         value = repository.config.get(command.section, command.option)
     except configparser.NoSectionError as e:
-        msg = f"Invalid section '{command.section}', choose from '{CONFIG_SECTIONS}'"
+        msg = f"Unknown section '{command.section}', choose from '{CONFIG_SECTIONS}'"
         raise exceptions.UnsupportedConfigError(msg) from e
     except configparser.NoOptionError as e:
         msg = f"Option '{command.option}' not found in section '{command.section}'"
@@ -80,3 +80,32 @@ def list_config(command: commands.ListConfig) -> None:
         for option in repository.config.options(section):
             value = repository.config.get(section, option)
             LOGGER.info(f"{section}.{option} = {value}")
+
+
+def unset_config(command: commands.UnsetConfig) -> None:
+    """Unset a configuration value.
+
+    Args:
+        command: The command responsible for unsetting a config value.
+
+    Raises:
+        UnsupportedConfigError: In case of an unsupported configuration.
+    """
+    repo_path = utils.find_repository_path(command.default_path) or command.default_path
+    repository = models.CodetrailRepository(repo_path)
+
+    try:
+        repository.config.remove_option(command.section, command.option)
+    except configparser.NoSectionError as e:
+        msg = f"Unknown section '{command.section}', choose from '{CONFIG_SECTIONS}'"
+        raise exceptions.UnsupportedConfigError(msg) from e
+    else:
+        if command.option not in CONFIG_USER_OPTIONS:
+            msg = (
+                f"Unknown option '{command.option}', "
+                f"choose from '{CONFIG_USER_OPTIONS}'"
+            )
+            raise exceptions.UnsupportedConfigError(msg)
+
+        utils.write_to_config_file(repository.config_path, repository.config)
+        LOGGER.info(f"Removed {command.key}")

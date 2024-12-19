@@ -21,12 +21,10 @@ def run(command: str, arguments: argparse.Namespace) -> None:
     """
     if command == "init":
         init(arguments)
-
     elif command in {"set", "unset", "get", "list", "edit"}:
         config(arguments)
-
     else:
-        msg = f"Invalid Command '{command}'. Choose from (init,config)"
+        msg = f"Invalid Command '{command}'"
         raise exceptions.InvalidCommandError(msg)
 
 
@@ -66,14 +64,19 @@ def run_config(arguments: argparse.Namespace) -> None:
     """
     match arguments.command:
         case "set":
-            command = commands.SetConfig(key=arguments.key[0], value=arguments.value[0])
-            cmd_config.set_config(command)
+            cmd_config.set_config(
+                commands.SetConfig(key=arguments.key[0], value=arguments.value[0]),
+            )
         case "get":
-            command = commands.GetConfig(key=arguments.key[0])
-            cmd_config.get_config(command)
+            cmd_config.get_config(commands.GetConfig(key=arguments.key[0]))
         case "list":
-            command = commands.ListConfig()
-            cmd_config.list_config(command)
+            cmd_config.list_config(commands.ListConfig())
+        case "unset":
+            cmd_config.unset_config(commands.UnsetConfig(key=arguments.key[0]))
+        case "edit":
+            cmd_config.set_config(
+                commands.SetConfig(key=arguments.key[0], value=arguments.value[0]),
+            )
         case _:
-            msg = f"Invalid Command '{arguments.command}'. Choose from (set,get)"
+            msg = f"Invalid Command '{arguments.command}'"
             raise exceptions.InvalidCommandError(msg)

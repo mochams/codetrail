@@ -29,6 +29,7 @@ We believe in learning by doing, but also in documenting why we did what we did.
 Current RFCs:
 
 - [RFC-001: Codetrail Initialize Command](docs/rfcs/CODETRAIL001.md)
+- [RFC-010: Codetrail Configuration Command](docs/rfcs/CODETRAIL010.md)
 - More to come as we build this thing!
 
 Want to contribute a new feature? Start by reading our existing RFCs to understand our design philosophy, then draft your own RFC before diving into code. We promise to read it, even if it's written on a napkin (digital napkins preferred).
@@ -39,7 +40,7 @@ Want to contribute a new feature? Start by reading our existing RFCs to understa
 
 - [x] Project setup (You're looking at it!)
 - [x] `init` - Because every journey needs a starting point. ([CODETRAIL001](docs/rfcs/CODETRAIL001.md))
-- [ ] `config` - Local config only (we're keeping it simple, folks)
+- [x] `config` - Local config only (we're keeping it simple, folks) ([CODETRAIL010](docs/rfcs/CODETRAIL010.md))
 - [ ] `add` - Teaching `codetrail` which files to track
 - [ ] `commit` - Making our first memories together
 
